@@ -1,9 +1,20 @@
 <script setup lang="ts">
-import {inject, ref} from "vue";
+import {inject, onMounted, ref} from "vue";
 import MobileNavItem from "@/components/Header/MobileNavItem.vue";
+import {PAGE_TIMELINE} from "@/contants";
 
 const navItems: MobileNavItem = inject('navItems')
-const currentPage: string = ref(window.location.hash.slice(1))
+const currentPage: string = ref(normalizePageHash())
+
+
+function normalizePageHash() {
+  const hash: string = window.location.hash.slice(1)
+
+  if (Object.keys(navItems).includes(hash)) return hash
+
+  window.location.hash = PAGE_TIMELINE
+  return PAGE_TIMELINE
+}
 </script>
 
 <template>
